@@ -62,10 +62,7 @@ unittest(test_new_operator)
 unittest(test_constants)
 {
   assertEqual(0x00, STATUS_OK);
-  assertEqual(0x01, STATUS_OPEN_CIRCUIT);
-  assertEqual(0x02, STATUS_SHORT_TO_GND);
-  assertEqual(0x04, STATUS_SHORT_TO_VCC);
-  assertEqual(0x07, STATUS_ERROR);
+  assertEqual(0x04, STATUS_ERROR);
   assertEqual(0x80, STATUS_NOREAD);
   assertEqual(0x81, STATUS_NO_COMMUNICATION);
   
@@ -86,12 +83,6 @@ unittest(test_status)
   assertEqual(STATUS_NOREAD, (int)tc.getStatus());
   assertEqual(0, tc.lastRead());
   assertEqual(0, tc.getRawData());
-  assertFalse(tc.openCircuit());
-  assertFalse(tc.shortToGND());
-  assertFalse(tc.shortToVCC());
-  assertFalse(tc.genericError());
-  assertFalse(tc.noCommunication());
-  assertTrue(tc.noRead());
 }
 
 
@@ -105,7 +96,6 @@ unittest(test_temperature)
   tc.begin(clPin, csPin, doPin);
 
   fprintf(stderr, "Temperature...\n");
-  assertEqualFloat(MAX6675_NO_TEMPERATURE, tc.getInternal(), 0.001);
   assertEqualFloat(MAX6675_NO_TEMPERATURE, tc.getTemperature(), 0.001);
 
   fprintf(stderr, "\nOffset...\n");
@@ -131,7 +121,7 @@ unittest(test_SPIspeed_SWSPIdelay)
   for (uint32_t sp = 100000; sp <= 1000000; sp += 100000)
   {
     tc.setSPIspeed(sp);
-    fprintf(stderr, "%ld\t", sp);
+    fprintf(stderr, "%lu\t", sp);
     assertEqual(sp, tc.getSPIspeed());
   }
 
