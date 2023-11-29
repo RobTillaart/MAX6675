@@ -112,6 +112,7 @@ uint32_t MAX6675::_read(void)
   if (_hwSPI)
   {
     _mySPI->beginTransaction(_spi_settings);
+    //  must be after mySPI->beginTransaction() - STM32 (#14 MAX31855_RT)
     digitalWrite(_select, LOW);
     _rawData = _mySPI->transfer(0);
     _rawData <<= 8;
