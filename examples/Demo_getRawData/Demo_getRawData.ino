@@ -5,26 +5,27 @@
 //     URL: https://github.com/RobTillaart/MAX6675
 
 
-#include "SPI.h"
 #include "MAX6675.h"
 
 
-#define MAXDO     7 // Defining the MISO pin
-#define MAXCS     6 // Defining the CS pin
-#define MAXCLK    5 // Defining the SCK pin
+const int dataPin   = 7;
+const int clockPin  = 6;
+const int selectPin = 5;
 
 
-MAX6675 thermocouple;
+MAX6675 thermoCouple(selectPin, dataPin, clockPin);
 
 
 void setup ()
 {
   Serial.begin(115200);
   Serial.println(__FILE__);
+  Serial.print("MAX6675_LIB_VERSION: ");
+  Serial.println(MAX6675_LIB_VERSION);
   Serial.println();
   delay(250);
 
-  thermocouple.begin(MAXCLK, MAXCS, MAXDO);
+  thermocouple.begin();
 }
 
 
@@ -36,10 +37,11 @@ void loop ()
     Serial.println("ERROR!");
   }
 
-  uint32_t value = thermocouple.getRawData();  // Read the raw Data value from the module
+  //  Read the raw Data value from the module
+  uint32_t value = thermocouple.getRawData();
   Serial.print("RAW:\t");
 
-  // Display the raw data value in BIN format
+  //  Display the raw data value in BIN format
   uint32_t mask = 0x80000000; 
   for (int i = 0; i < 32; i++) 
   {
@@ -56,5 +58,5 @@ void loop ()
 }
 
 
-// -- END OF FILE --
+//  -- END OF FILE --
 

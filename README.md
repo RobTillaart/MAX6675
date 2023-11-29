@@ -48,6 +48,16 @@ The library is tested with a breakout board with following pins:
              +---------------------+
 ```
 
+#### 0.2.0 breaking change
+
+The version 0.2.0 has breaking changes in the interface. 
+The essence is removal of ESP32 specific code from the library. 
+This makes it possible to support the ESP32-S3 and other processors in the future. 
+Also it makes the library a bit simpler to maintain.
+
+Note the order of the parameters of the software SPI constructor has changed in 0.2.0.
+
+
 #### Related
 
 - https://github.com/RobTillaart/MAX6675
@@ -60,7 +70,7 @@ The library is tested with a breakout board with following pins:
 
 #### Pins
 
-Default pin connections. ESP32 can overrule with **setGPIOpins()**.
+Default pin connections.
 
  | HW SPI   |  UNO  |  ESP32 VSPI |  ESP32 HSPI | Notes
  |:---------|:-----:|:-----------:|:-----------:|:----------|
@@ -101,6 +111,16 @@ Tested with **MAX6675_test_HWSPI.ino**
 
 #### Constructor
 
+
+  // HW SPI
+  MAX6675(uint8_t select, SPIClassRP2040 \* mySPI);
+  MAX6675(uint8_t select, SPIClass \* mySPI);
+  // SW SPI
+  MAX6675(uint8_t select, uint8_t miso, uint8_t clock);
+
+  void     begin();
+  
+  
 - **MAX6675()** create object.
 - **void begin(const uint8_t select)** set select pin => hardware SPI
 - **void begin(const uint8_t sclk, const uint8_t select, const uint8_t miso)** 
@@ -116,15 +136,6 @@ To be used only if one needs a specific speed.
 - **void setSWSPIdelay(uint16_t del = 0)** for tuning SW SPI signal quality. 
 Del is the time in micros added per bit. Even numbers keep the duty cycle of the clock around 50%.
 - **uint16_t getSWSPIdelay()** get set value in micros.
-
-
-#### ESP32 specific
-
-- **void selectHSPI()** must be called before **begin()**
-- **void selectVSPI()** must be called before **begin()**
-- **bool usesHSPI()**
-- **bool usesVSPI()**
-- **void setGPIOpins(uint8_t clk, uint8_t miso, uint8_t mosi, uint8_t select)**  to overrule ESP32 default hardware pins.
 
 
 #### Reading
@@ -263,9 +274,10 @@ See examples
 
 #### Must
 
+- update and verify documentation (as it is copied from MAX31855 lib)
+
 #### Should
 
-- update and verify documentation (as it is copied from MAX31855 lib)
 - keep interface in sync with MAX31855 if possible.
 
 #### Could
