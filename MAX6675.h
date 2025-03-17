@@ -68,7 +68,7 @@ public:
   //       returns state - bit field: 0 = STATUS_OK
   uint8_t  read();
   float    getCelsius(void)      { return _temperature + _offset; };
-  float    getFahrenHeit(void)   { return getCelsius() * 1.8 + 32; };
+  float    getFahrenheit(void)   { return getCelsius() * 1.8 + 32; };
 
   uint8_t  getStatus(void) const { return _status; };
 
