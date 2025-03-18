@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
-## [0.3.2] - 2025-03-17
+## [0.3.3] - 2025-03-17
 - add getCelsius() to replace getTemperature() in long term.
 - add getFahrenheit() convenience wrapper.
 - update examples

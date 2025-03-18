@@ -18,7 +18,7 @@ MAX6675 thermoCouple(selectPin, dataPin, clockPin);
 
 void setup ()
 {
-  while(!Serial);
+  //  while(!Serial);
   Serial.begin(115200);
   Serial.println(__FILE__);
   Serial.print("MAX6675_LIB_VERSION: ");

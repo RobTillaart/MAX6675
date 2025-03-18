@@ -22,7 +22,7 @@ float temp = 0;
 
 void setup()
 {
-  while(!Serial);
+  //  while(!Serial);
   Serial.begin(115200);
   //  Serial.println(__FILE__);
   //  Serial.print("MAX6675_LIB_VERSION: ");
